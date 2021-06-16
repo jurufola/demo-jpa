@@ -16,8 +16,10 @@ public class ConnexionJpa {
         Region region = manager.find(Region.class, 58);
         System.out.println(region);
         //Creation nouvelle region
-        Region regionNv = new Region("223", "Ségou");
+        Region regionNv = new Region("226", "Koulikoro");
+        System.out.println(" id nouvelle region avant la persistence " + regionNv.getId());
         manager.persist(regionNv);
+        System.out.println(" id nouvelle region après la persistence " + regionNv.getId());
         et.commit();
         manager.close();
         factory.close();
