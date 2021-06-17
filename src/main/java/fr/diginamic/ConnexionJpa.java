@@ -48,11 +48,11 @@ public class ConnexionJpa {
         }
 
         // Tous les emprunts du client d'id 1
-        //TypedQuery<Emprunt> queryEmp = managerBiblio.createQuery("select emp from emprunt emp where emp.id_client = 1", Emprunt.class);
+        TypedQuery<Emprunt> queryEmp = managerBiblio.createQuery("select emp from Emprunt emp where emp.client.id = 1", Emprunt.class);
 
-        //List<Emprunt> emprunts = queryEmp.getResultList();
-        Client cleint = managerBiblio.find(Client.class, 1);
-        List<Emprunt> emprunts = cleint.getEmprunts();
+        List<Emprunt> emprunts = queryEmp.getResultList();
+        Client client = managerBiblio.find(Client.class, 1);
+        //List<Emprunt> emprunts = client.getEmprunts();
         for (Emprunt emp : emprunts) {
             System.out.println(emp);
         }
