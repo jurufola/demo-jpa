@@ -1,12 +1,12 @@
 package fr.diginamic;
 
+import fr.diginamic.entites.Client;
+import fr.diginamic.entites.Emprunt;
 import fr.diginamic.entites.Livre;
-import fr.diginamic.entites.Region;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ConnexionJpa {
     public static void main(String[] args) {
@@ -31,11 +31,31 @@ public class ConnexionJpa {
         EntityManager managerBiblio = factoryBiblio.createEntityManager();
         EntityTransaction etBiblio = managerBiblio.getTransaction();
         etBiblio.begin();
-        Livre livre = managerBiblio.find(Livre.class, 1);
-        System.out.println(livre.getId());
+        //Livre livre = managerBiblio.find(Livre.class, 1);
+        //System.out.println(livre.getId());
         //Insertion nouveau livre
-        Livre livreNv = new Livre("La tête à toto", "toto");
-        managerBiblio.persist(livreNv);
+        //Livre livreNv = new Livre("La tête à toto", "toto", new ArrayList<>());
+        //managerBiblio.persist(livreNv);
+
+        //Tp3
+        Emprunt emprunt = managerBiblio.find(Emprunt.class, 1);
+        System.out.println(emprunt);
+        List<Livre> livres = emprunt.getLivres();
+
+        //Listes de tous les livres assocés à l'emperunt d'id 1
+        for (Livre livre : livres) {
+            System.out.println(livre);
+        }
+
+        // Tous les emprunts du client d'id 1
+        //TypedQuery<Emprunt> queryEmp = managerBiblio.createQuery("select emp from emprunt emp where emp.id_client = 1", Emprunt.class);
+
+        //List<Emprunt> emprunts = queryEmp.getResultList();
+        Client cleint = managerBiblio.find(Client.class, 1);
+        List<Emprunt> emprunts = cleint.getEmprunts();
+        for (Emprunt emp : emprunts) {
+            System.out.println(emp);
+        }
         etBiblio.commit();
         managerBiblio.close();
         factoryBiblio.close();
